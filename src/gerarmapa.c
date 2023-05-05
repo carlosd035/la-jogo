@@ -1,7 +1,6 @@
 #include <ncurses.h>
 
-
-int dungeon_gen(int rows, int cols,int r_placed, char (*map)[cols]){
+int dungeon_gen(int rows,int cols, char (*map)[cols],int r_placed){
 
   if (!r_placed)
     {

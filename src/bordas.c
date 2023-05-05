@@ -32,3 +32,4 @@ int dungeon_draw(int rows, int cols, char (*map)[cols]){
   }
   return 0;
 }
+
