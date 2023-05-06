@@ -9,7 +9,7 @@ bool p_place = 0;
 int r_placed = 0;
 bool t_place = 0;
 int p_goid;
-#include <ncurses.h>
+
 
 int dungeon_draw(int rows, int cols, char (*map)[cols])
 {
@@ -42,7 +42,7 @@ int dungeon_draw(int rows, int cols, char (*map)[cols])
       }
     }
   }
-  refresh();
+  
 
   return 0;
 }
@@ -56,7 +56,7 @@ int dungeon_gen(int rows, int cols, char (*map)[cols])
     int r_size_y, r_size_x; // room size
     int r_center_y = 0, r_center_x = 0;
     int r_old_center_y, r_old_center_x;
-    int room_num = rand() % 30 + 20;
+    int room_num = rand() % 40 +30;
     bool collision;
 
     // fill dungeon with walls and borders
@@ -88,7 +88,7 @@ int dungeon_gen(int rows, int cols, char (*map)[cols])
         rx = rand() % (cols - 4) + 1;
 
         // room sizes
-        r_size_y = rand() % 5 + 4;
+        r_size_y = rand() % 3 + 4;
         r_size_x = rand() % 10 + 8;
 
         try_counter++;
@@ -175,44 +175,7 @@ int dungeon_gen(int rows, int cols, char (*map)[cols])
   return 0;
 }
 
-int game_loop(int rows, int c, int cols, char (*map)[cols]) /// forma de pssar um arra
-{
-  srand(time(NULL));
-
-  dungeon_gen(rows, cols, map);
-  dungeon_draw(rows, cols, map);
-
-  // draw ' ' empty space
-  for (int yy = 0; yy <= rows; yy++)
-  {
-    for (int xx = 0; xx <= cols; xx++)
-    {
-      if (map[yy][xx] == ' ')
-      {
-        mvaddch(yy, xx, ' ');
-      }
-      else if (yy == 0 || yy == rows - 1)
-      {
-
-        mvaddch(yy, xx, 'O');
-      }
-      else if ((xx == 0 || xx == cols) && yy != rows) /// colocar as bordas do mapa / aqui damos print ao que vei sendo guardado no array 2d
-      {
-
-        mvaddch(yy, xx, 'O');
-      }
-
-      else if (yy == rows)
-      {
-        mvaddch(yy, xx, ' ');
-      }
-      else
-      {
-        mvaddch(yy, xx, '#');
-      }
-    }
-  }
-
+void movimentacao (int c,int cols,char (*map)[cols]){
   /// parte da movimnetcao
   if (c == 'w' && map[y - 1][x] == ' ')
     y--;
@@ -222,8 +185,18 @@ int game_loop(int rows, int c, int cols, char (*map)[cols]) /// forma de pssar u
     x--;
   else if (c == 'd' && map[y][x + 1] == ' ')
     x++;
+  }
 
-  ///  gerar random o t e o "@"
+
+int game_loop(int rows, int c, int cols, char (*map)[cols]) /// forma de pssar um arra
+{
+  srand(time(NULL));
+
+  dungeon_gen(rows, cols, map);
+  dungeon_draw(rows, cols, map);
+  movimentacao(c,cols,map);
+
+//  gerar random o t e o "@"
   if (p_place == 0)
   {
     while (1) /// gerar random o "@"
@@ -280,13 +253,11 @@ int main()
 
   // Inicia o suporte a cores
   start_color();
+  //init_color(2,COLOR_RED,COLOR_BLUE);
 
   // Define o par de cores 1 como vermelho no fundo e branco no texto
-  init_pair(1,COLOR_BLUE,COLOR_YELLOW);
-
+  init_pair(1,COLOR_WHITE,COLOR_BLUE);
   bkgd(COLOR_PAIR(1));  
-
-  refresh();
   attroff(COLOR_PAIR(1));
 
   char map[rows][cols];
