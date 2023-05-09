@@ -1,1 +1,11 @@
 ola
+attron
+(COLOR_PAIR(3));
+        mvaddch(yy, xx, '/');
+        attroff(COLOR_PAIR(3));
+
+
+
+ attron(COLOR_PAIR(3));
+        mvaddch(yy, xx, '/');
+        attroff(COLOR_PAIR(3));
