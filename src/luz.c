@@ -43,7 +43,7 @@ void cast_light(int radius, int cols, int **map, int rows, posicao_player *playe
       bool blocked = false;
       while (cx != x || cy != y)
       {
-        if (map[cy][cx] == '#' || map[cy][cx] == '*' || map[cy][cx] == '/')
+        if (map[cy][cx] == '#' || map[cy][cx] == '/')
         {
           blocked = true;
           break;
