@@ -7,43 +7,51 @@
 #include <curses.h>
 #include "structs.h"
 
-void check_armadilha(int rows, int cols, int *vida, int *level,posicao_player *player,posicao_armadilha *a)
+
+
+void check_vida2(int *vida, int rows, int cols)
 {
-  if (player->y == a->ay && player->x == a->ax)
+  if (*vida <= 0)
   {
-    *vida = *vida - 25;
-    if (*vida <= 0)
-    {
-      clear();                                          // Limpa a tela
-      attron(A_BOLD);                                   // Ativa o atributo de texto A_BOLD
-      mvprintw(rows / 2, (cols - 18) / 2, "GAME OVER"); // Exibe a mensagem centralizada
-      attroff(A_BOLD);                                  // Desativa o atributo de texto A_BOLD
-      refresh();                                        // Atualiza a tela
-      getch();                                          // Aguarda a entrada do usuário
-      endwin();                                         // Restaura as configurações do terminal
-      exit(0);                                          // Encerra o programa
-    }
+    clear();                                          // Limpa a tela
+    attron(A_BOLD);                                   // Ativa o atributo de texto A_BOLD
+    mvprintw(rows / 2, (cols - 18) / 2, "GAME OVER"); // Exibe a mensagem centralizada
+    attroff(A_BOLD);                                  // Desativa o atributo de texto A_BOLD
+    refresh();                                        // Atualiza a tela
+    getch();                                          // Aguarda a entrada do usuário
+    endwin();                                         // Restaura as configurações do terminal
+    exit(0);                                          // Encerra o programa
   }
-  mvprintw(rows, 0, "LEVEL: %d  VIDA: %d", *level, *vida);
 }
 
-void armadilha(int rows, int cols, int **map, int *vida, posicao_player *player, bool *a_place, int *level,posicao_armadilha *a)
-{
-
-  if (*a_place == 0)
+void check_armadilha(int *vida, posicao_player *player, int rows, int cols,int **map)
+{  
+  if (map[player->y][player->x] == '*')
   {
-    do
-    {
-      // gerar t aleatoriamente
-      a->ay = rand() % rows - 1; // para não gerar na última linha
-      a->ax = rand() % cols;
-    } while (map[a->ay][a->ax] != ' ');
-
-    *a_place = *a_place +1;
+    
+    *vida = *vida - 5;
+    check_vida2(vida, rows, cols);
   }
-  attron(COLOR_PAIR(2));
-  mvaddch(a->ay, a->ax, '*');
-  map[a->ay][a->ax] = '*';
-  attroff(COLOR_PAIR(2));
-  check_armadilha(rows, cols, vida,level,player,a);
+}
+
+void trap(int rows, int cols, int **map, bool *f_place, posicao_armadilha *f, int *vida, posicao_player *player)
+{
+  if (!*f_place)
+  {
+    for (int i = 0; i < 24; i++)
+    {
+      do
+      {
+        // Gerar posição aleatória
+        f->fy = rand() % (rows - 2) + 1; // para não gerar na primeira nem na última linha
+        f->fx = rand() % (cols - 2) + 1; // para não gerar na primeira nem na última coluna
+      } while (map[f->fy][f->fx] != ' ');
+
+      map[f->fy][f->fx] = '*';
+    }
+
+    *f_place = true;
+  }
+
+  check_armadilha(vida, player, rows, cols,map);
 }

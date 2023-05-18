@@ -85,9 +85,21 @@ void cast_light(int radius, int cols, int **map, int rows, posicao_player *playe
       }
       else if (map[y][x] == 't')
       {
-        attron(COLOR_PAIR(6));
+        attron(COLOR_PAIR(4));
         mvaddch(y, x, 't');
+        attroff(COLOR_PAIR(4));
+      }
+      else if (map[y][x] == 'M')
+      {
+        attron(COLOR_PAIR(6));
+        mvaddch(y, x, 'M');
         attroff(COLOR_PAIR(6));
+      }
+      else if (map[y][x] == '*')
+      {
+        attron(COLOR_PAIR(3));
+        mvaddch(y, x, '*');
+        attroff(COLOR_PAIR(3));
       }
       else
       {

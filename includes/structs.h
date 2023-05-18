@@ -16,11 +16,18 @@ typedef struct posicao_tt
 } posicao_t;
 
 
-typedef struct posicao_a
+typedef struct posicao_m
 {
   int ay;
   int ax;
+} posicao_monstro;
+
+typedef struct posicao_a
+{
+  int fy;
+  int fx;
 } posicao_armadilha;
+
 
 #define M_PI 3.14159265358979323846
 

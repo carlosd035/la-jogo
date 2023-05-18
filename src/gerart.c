@@ -8,14 +8,14 @@
 #include "structs.h"
 #include "corredores.h"
 
-void check_t (int rows, int cols, int **map, int c,int *level,bool*p_place,int *r_place,posicao_player* player,posicao_t *t,bool*t_place,bool *a_place){
+void check_t (int rows, int cols, int **map, int c,int *level,bool*p_place,int *r_place,posicao_player* player,posicao_t *t,bool*t_place,bool *a_place,bool *f_place){
   if (player->y == t->ty && player->x == t->tx && c == 'm')
   { 
     *r_place = 0;
     *t_place = 0;
     *a_place = 0;
     *p_place = 0;
-    
+    *f_place = 0 ;
 
     dungeon_gen(rows, cols, map,r_place);
 
@@ -23,7 +23,7 @@ void check_t (int rows, int cols, int **map, int c,int *level,bool*p_place,int *
   }
 }
 
-void gerar_t(int rows, int cols, int **map, int c,int *level,bool*p_place,int *r_place,posicao_player* player,posicao_t *t,bool *t_place,bool *a_place)
+void gerar_t(int rows, int cols, int **map, int c,int *level,bool*p_place,int *r_place,posicao_player* player,posicao_t *t,bool *t_place,bool *a_place,bool *f_place)
 {
 
   if (*t_place == 0)
@@ -38,13 +38,9 @@ void gerar_t(int rows, int cols, int **map, int c,int *level,bool*p_place,int *r
 
     *t_place = 1;
   }
-
-  attron(COLOR_PAIR(2));
-
-  mvaddch(t->ty, t->tx, 't');
   map[t->ty][t->tx] = 't';
-  attroff(COLOR_PAIR(2));
-  check_t (rows,cols,map,c,level,p_place,r_place,player,t,t_place,a_place);
+  
+  check_t (rows,cols,map,c,level,p_place,r_place,player,t,t_place,a_place,f_place);
 }
 
 
