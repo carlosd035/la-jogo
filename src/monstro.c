@@ -20,75 +20,107 @@ void check_vida(int *vida, int rows, int cols)
     exit(0);                                          // Encerra o programa
   }
 }
+/*
+void initialize_monsters(posicao_monstro a[]) {
+  for (int i = 0; i < 7; i++) {
+    a[i].vidam = 100;
+  }
+}
 
+
+void attack_player(posicao_player *player, posicao_monstro a[], int **map)
+{
+
+
+  // Verificar a posição do jogador em relação aos monstros
+  for (int i = 0; i < 7; i++)
+  {
+    int distance = abs(player->x - a[i].ax) + abs(player->y - a[i].ay);
+
+    if (distance <= 1)
+    {
+      a[i].vidam -= 15;
+    }
+
+    // Verificar se o monstro foi derrotado
+    if (a[i].vidam <= 0)
+    {
+      // Remover o monstro do mapa
+      map[a[i].ay][a[i].ax] = ' ';
+    }
+  }
+}
+*/
 void monster(int rows, int cols, int **map, int *vida, posicao_player *player, bool *a_place, posicao_monstro *a)
 {
+  // Verificar se os monstros já foram colocados no mapa
   if (!*a_place)
   {
-    do
+    for (int i = 0; i < 7; i++)
     {
-      // Gerar posições iniciais aleatórias
-      a->ay = rand() % (rows - 1); // para não gerar na última linha
-      a->ax = rand() % cols;
-    } while (map[a->ay][a->ax] != ' ');
+      do
+      {
+        // Gerar posições iniciais aleatórias
+        a[i].ay = rand() % (rows - 1); // para não gerar na última linha
+        a[i].ax = rand() % cols;
+      } while (map[a[i].ay][a[i].ax] != ' ');
+
+      map[a[i].ay][a[i].ax] = 'M';
+    }
 
     *a_place = true;
   }
 
-  map[a->ay][a->ax] = 'M';
-
-  int direction = 0;
-
-  // Verificar se o jogador está dentro do raio de visão da armadilha
-  int distanceX = abs(player->x - a->ax);
-  int distanceY = abs(player->y - a->ay);
-
-  if (distanceX + distanceY <= 9)
+  // Atualizar a posição de cada monstro
+  for (int i = 0; i < 7; i++)
   {
-    // Determinar a direção para perseguir o jogador
-    if (player->x < a->ax)
-      direction = 2; // Esquerda
-    else if (player->x > a->ax)
-      direction = 3; // Direita
-    else if (player->y < a->ay)
-      direction = 0; // Cima
-    else if (player->y > a->ay)
-      direction = 1; // Baixo
+    map[a[i].ay][a[i].ax] = ' ';
 
-    // Se o monstro já tocou o jogador, reduzir a vida do jogador se ele estiver dentro do raio de 2 células
-    if (distanceX <= 1 && distanceY <= 1)
+    int direction = 0;
+    int distanceX = abs(player->x - a[i].ax);
+    int distanceY = abs(player->y - a[i].ay);
+
+    if (distanceX + distanceY <= 9)
     {
-      (*vida)--;
-      check_vida(vida, rows, cols);
+      if (player->x < a[i].ax)
+        direction = 2; // Esquerda
+      else if (player->x > a[i].ax)
+        direction = 3; // Direita
+      else if (player->y < a[i].ay)
+        direction = 0; // Cima
+      else if (player->y > a[i].ay)
+        direction = 1; // Baixo
+
+      if (distanceX <= 1 && distanceY <= 1)
+      {
+        (*vida)--;
+        check_vida(vida, rows, cols);
+      }
     }
+    else
+    {
+      direction = rand() % 4;
+    }
+
+    int next_ay = a[i].ay;
+    int next_ax = a[i].ax;
+
+    if (direction == 0)
+      next_ay--;
+    else if (direction == 1)
+      next_ay++;
+    else if (direction == 2)
+      next_ax--;
+    else if (direction == 3)
+      next_ax++;
+
+    if (next_ay >= 0 && next_ay < rows && next_ax >= 0 && next_ax < cols &&
+        map[next_ay][next_ax] == ' ' && (next_ay != player->y || next_ax != player->x))
+    {
+      a[i].ay = next_ay;
+      a[i].ax = next_ax;
+    }
+
+    map[a[i].ay][a[i].ax] = 'M';
   }
-  else
-  {
-    // Escolher uma direção aleatória
-    direction = rand() % 4;
-  }
-
-  int next_ay = a->ay;
-  int next_ax = a->ax;
-
-  if (direction == 0)
-    next_ay--;
-  else if (direction == 1)
-    next_ay++;
-  else if (direction == 2)
-    next_ax--;
-  else if (direction == 3)
-    next_ax++;
-
-  // Verificar se a próxima posição está dentro dos limites, não é uma parede e não é o jogador
-  if (next_ay >= 0 && next_ay < rows && next_ax >= 0 && next_ax < cols &&
-      map[next_ay][next_ax] == ' ' && (next_ay != player->y || next_ax != player->x))
-  {
-    // Atualizar a posição do monstro
-    map[a->ay][a->ax] = ' '; // Limpar a posição atual
-    a->ay = next_ay;
-    a->ax = next_ax;
-  }
-
-  map[a->ay][a->ax] = 'M';
 }

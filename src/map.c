@@ -21,7 +21,7 @@ int **criarMatriz(int rows, int cols)
   return map;
 }
 
-int dungeon_draw(int rows, int cols, int **map, int *vida, int *level )
+int dungeon_draw(int rows, int cols, int **map, int *vida, int *level,bool *w_on )
 {
 
   for (int yy = 0; yy <= rows; yy++)
@@ -51,17 +51,17 @@ int dungeon_draw(int rows, int cols, int **map, int *vida, int *level )
       {
         mvaddch(yy, xx, ' ');
       }
-      else if (map[yy][xx] == 't')
+      else if (map[yy][xx] == 'L')
       {
         attron(COLOR_PAIR(2));
-        mvaddch(yy, xx, 't');
+        mvaddch(yy, xx, 'L');
         attroff(COLOR_PAIR(2));
       }
       else if (map[yy][xx] == 'M')
       {
-        attron(COLOR_PAIR(6));
+        attron(COLOR_PAIR(2));
         mvaddch(yy, xx, 'M');
-        attroff(COLOR_PAIR(6));
+        attroff(COLOR_PAIR(2));
       }
       else if (map[yy][xx] == '*')
       {
@@ -69,17 +69,32 @@ int dungeon_draw(int rows, int cols, int **map, int *vida, int *level )
         mvaddch(yy, xx, '*');
         attroff(COLOR_PAIR(2));
       }
+      else if (map[yy][xx] == '+')
+      {
+        attron(COLOR_PAIR(2));
+        mvaddch(yy, xx, '+');
+        attroff(COLOR_PAIR(2));
+      }
+       else if (map[yy][xx] == '!')
+      {
+        attron(COLOR_PAIR(2));
+        mvaddch(yy, xx, '!');
+        attroff(COLOR_PAIR(2));
+      }
       else
       {
 
-        attron(COLOR_PAIR(2));
+        attron(COLOR_PAIR(1));
         mvaddch(yy, xx, '#');
-        attroff(COLOR_PAIR(2));
+        attroff(COLOR_PAIR(1));
       }
     }
   }
-  
+  if (*w_on == 1){
+     mvprintw(rows, 0, "LEVEL: %d  VIDA: %d Tenho uma arma ", *level, *vida);
+  }
   mvprintw(rows, 0, "LEVEL: %d  VIDA: %d", *level, *vida);
+   
 
   return 0;
 }

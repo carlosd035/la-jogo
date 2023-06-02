@@ -7,9 +7,67 @@
 #include <string.h>
 #include <curses.h>
 
+void check_color(int x, int y, int **map)
+{
+  if (map[y][x] == '#')
+  {
+    attron(COLOR_PAIR(5));
+    mvaddch(y, x, '#');
+    attroff(COLOR_PAIR(5));
+  }
+  else if (map[y][x] == '*')
+  {
+    attron(COLOR_PAIR(3));
+    mvaddch(y, x, '*');
+    attroff(COLOR_PAIR(3));
+  }
+  else if (map[y][x] == '/')
+  {
+    attron(COLOR_PAIR(3));
+    mvaddch(y, x, '/');
+    attroff(COLOR_PAIR(3));
+  }
+  else if (map[y][x] == 'L')
+  {
+    attron(COLOR_PAIR(4));
+    mvaddch(y, x, 'L');
+    attroff(COLOR_PAIR(4));
+  }
+  else if (map[y][x] == 'M')
+  {
+    attron(COLOR_PAIR(6));
+    mvaddch(y, x, 'M');
+    attroff(COLOR_PAIR(6));
+  }
+  else if (map[y][x] == '*')
+  {
+    attron(COLOR_PAIR(3));
+    mvaddch(y, x, '*');
+    attroff(COLOR_PAIR(3));
+  }
+  else if (map[y][x] == '+')
+  {
+    attron(COLOR_PAIR(7));
+    mvaddch(y, x, '+');
+    attroff(COLOR_PAIR(7));
+  }
+
+   else if (map[y][x] == '!')
+  {
+    attron(COLOR_PAIR(3));
+    mvaddch(y, x, '!');
+    attroff(COLOR_PAIR(3));
+  }
+  
+  else
+  {
+    attron(COLOR_PAIR(1));
+    mvaddch(y, x, '.');
+  }
+}
+
 void cast_light(int radius, int cols, int **map, int rows, posicao_player *player)
 {
-
   for (int i = 0; i < 360; i += 1)
   {
     double dx = cos(i * M_PI / 180.0);
@@ -18,7 +76,7 @@ void cast_light(int radius, int cols, int **map, int rows, posicao_player *playe
     int y = (int)player->y;
     for (int j = 1; j <= radius; j++)
     {
-      if (x < 0 || y < 0 || x >= cols || y >= rows)
+      if (x < 0 || y < 0 || x > cols || y > rows)
       {
         break;
       }
@@ -64,48 +122,8 @@ void cast_light(int radius, int cols, int **map, int rows, posicao_player *playe
       {
         break;
       }
-      
-      if (map[y][x] == '#')
-      {
-        attron(COLOR_PAIR(5));
-        mvaddch(y, x, '#');
-        attroff(COLOR_PAIR(5));
-      }
-      else if (map[y][x] == '*')
-      {
-        attron(COLOR_PAIR(3));
-        mvaddch(y, x, '*');
-        attroff(COLOR_PAIR(3));
-      }
-      else if (map[y][x] == '/')
-      {
-        attron(COLOR_PAIR(3));
-        mvaddch(y, x, '/');
-        attroff(COLOR_PAIR(3));
-      }
-      else if (map[y][x] == 't')
-      {
-        attron(COLOR_PAIR(4));
-        mvaddch(y, x, 't');
-        attroff(COLOR_PAIR(4));
-      }
-      else if (map[y][x] == 'M')
-      {
-        attron(COLOR_PAIR(6));
-        mvaddch(y, x, 'M');
-        attroff(COLOR_PAIR(6));
-      }
-      else if (map[y][x] == '*')
-      {
-        attron(COLOR_PAIR(3));
-        mvaddch(y, x, '*');
-        attroff(COLOR_PAIR(3));
-      }
-      else
-      {
-        attron(COLOR_PAIR(1));
-        mvaddch(y, x, '.');
-      }
+      check_color(x, y, map);
     }
   }
 }
+

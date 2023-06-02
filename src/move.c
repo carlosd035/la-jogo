@@ -13,19 +13,19 @@ void movimentacao(int c, int **map, posicao_player* player)
 {
   switch (c)
   {
-  case '8':
+  case 'w':
     if (map[player->y - 1][player->x] != '#' && map[player->y - 1][player->x] != '/')
       player->y--;
     break;
-  case '2':
+  case 's':
     if (map[player->y + 1][player->x] != '#' && map[player->y + 1][player->x] != '/')
       player->y++;
     break;
-  case '4':
+  case 'a':
     if (map[player->y][player->x - 1] != '#' && map[player->y][player->x - 1] != '/')
       player->x--;
     break;
-  case '6':
+  case 'd':
     if (map[player->y][player->x + 1] != '#' && map[player->y][player->x + 1] != '/')
       player->x++;
     break;

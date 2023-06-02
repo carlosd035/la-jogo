@@ -16,7 +16,7 @@ int dungeon_gen(int rows, int cols, int **map,int *r_place)
     int room_size_y, room_size_x; // room size
     int centro_y = 0, centro_x = 0;
     int centro_a_y, centro_a_x;
-    int room_num = rand() % 30 + 25;
+    int room_num = rand() % 40 + 35;
     bool collision;
 
     // fill dungeon with walls and borders
