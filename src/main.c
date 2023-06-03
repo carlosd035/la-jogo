@@ -25,12 +25,12 @@ int game_loop(int rows, int c, int cols, int **map, int *r_place, int *vida, pos
 
   dungeon_gen(rows, cols, map, r_place);
   gerar_l(rows, cols, map, c, level, p_place, r_place, player, t, t_place, a_place,f_place,v_place,w_place);
-  monster(rows, cols, map, vida, player, a_place, a);
+ monster(rows, cols, map, vida, player, a_place, a);
   trap(rows, cols, map, f_place, f,vida,player);
   g_vida (rows,cols,map, c,player, v_place ,vida,v);
   weapon(rows, cols, map,player,w_place,w,c,w_on);
 
-  dungeon_draw(rows, cols, map, vida, level,w_on);
+  dungeon_draw(rows, cols, map, vida, level,w_on,c);
   movimentacao(c, map, player);
   cast_light(11, cols, map, rows, player);
   gerar_player(rows, cols, map, player, p_place);
@@ -66,6 +66,7 @@ int main()
   posicao_monstro *a = malloc(sizeof(posicao_monstro));
   (*a).ax = -1;
   (*a).ay = -1;
+  //(*a).vidam = 100;
 
   posicao_armadilha *f = malloc(sizeof(posicao_armadilha));
   (*f).fx = -1;
@@ -79,6 +80,7 @@ int main()
   posicao_arma *w = malloc(sizeof(posicao_armadilha));
   (*w).wx = -1;
   (*w).wy = -1;
+  
 
 
 
@@ -93,15 +95,24 @@ int main()
   init_pair(2, COLOR_BLACK, COLOR_BLACK);
   init_pair(6, COLOR_GREEN, COLOR_BLACK);
   init_pair(7,COLOR_YELLOW,COLOR_BLACK);
-  bkgd(COLOR_PAIR(1));
-  attroff(COLOR_PAIR(1));
 
-  int ch;
-  mvprintw(rows / 2, (cols - strlen("Bem-vindo ao jogo!")) / 2, "Bem-vindo ao jogo!");
-  attron(A_BOLD);
-  mvprintw(rows / 2 + 2, (cols - strlen("Pressione 'p' para jogar.")) / 2, "Pressione 'p' para jogar.");
-  attroff(A_BOLD);
-  refresh();
+
+int ch;
+mvprintw(rows / 2 - 4, (cols - strlen("Bem-vindo ao jogo!")) / 2, "Bem-vindo ao jogo!");
+attron(A_BOLD);
+mvprintw(rows / 2 + 2, (cols - strlen("Pressione 'p' para jogar.")) / 2, "Pressione 'p' para jogar.");
+attroff(A_BOLD);
+refresh();
+
+// Adicionar elementos adicionais
+mvprintw(rows / 2 + 4, (cols - strlen("* - Perde vida")) / 2, "* - Perde vida");
+mvprintw(rows / 2 + 6, (cols - strlen("+ - Ganha vida (pressione 'v')")) / 2, "+ - Ganha vida (pressione 'v')");
+mvprintw(rows / 2 + 8, (cols - strlen("! - Ganha arma (pressione 'b')")) / 2, "! - Ganha arma (pressione 'b')");
+mvprintw(rows / 2 + 10, (cols - strlen("k - Ativa luz")) / 2, "k - Ativa luz");
+mvprintw(rows / 2 + 12, (cols - strlen("l - Muda de nível (pressione 'l')")) / 2, "l - Muda de nível (pressione 'l')");
+mvprintw(rows / 2 + 14, (cols - strlen("M - Monstros fuja!")) / 2, "M - Monstros fuja!");
+refresh();
+
 
   while (true)
   {

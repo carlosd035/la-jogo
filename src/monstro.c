@@ -20,59 +20,32 @@ void check_vida(int *vida, int rows, int cols)
     exit(0);                                          // Encerra o programa
   }
 }
-/*
-void initialize_monsters(posicao_monstro a[]) {
-  for (int i = 0; i < 7; i++) {
-    a[i].vidam = 100;
-  }
-}
 
 
-void attack_player(posicao_player *player, posicao_monstro a[], int **map)
-{
 
-
-  // Verificar a posição do jogador em relação aos monstros
-  for (int i = 0; i < 7; i++)
-  {
-    int distance = abs(player->x - a[i].ax) + abs(player->y - a[i].ay);
-
-    if (distance <= 1)
-    {
-      a[i].vidam -= 15;
-    }
-
-    // Verificar se o monstro foi derrotado
-    if (a[i].vidam <= 0)
-    {
-      // Remover o monstro do mapa
-      map[a[i].ay][a[i].ax] = ' ';
-    }
-  }
-}
-*/
 void monster(int rows, int cols, int **map, int *vida, posicao_player *player, bool *a_place, posicao_monstro *a)
 {
+
   // Verificar se os monstros já foram colocados no mapa
-  if (!*a_place)
+  if (*a_place== 0 )
   {
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 10; i++)
     {
       do
       {
         // Gerar posições iniciais aleatórias
-        a[i].ay = rand() % (rows - 1); // para não gerar na última linha
-        a[i].ax = rand() % cols;
+        a[i].ay = rand() % (rows - 2); // para não gerar na última linha
+        a[i].ax = rand() % cols-2;
       } while (map[a[i].ay][a[i].ax] != ' ');
 
       map[a[i].ay][a[i].ax] = 'M';
     }
 
-    *a_place = true;
+    *a_place = 1;
   }
 
   // Atualizar a posição de cada monstro
-  for (int i = 0; i < 7; i++)
+  for (int i = 0; i < 10; i++)
   {
     map[a[i].ay][a[i].ax] = ' ';
 
@@ -91,7 +64,7 @@ void monster(int rows, int cols, int **map, int *vida, posicao_player *player, b
       else if (player->y > a[i].ay)
         direction = 1; // Baixo
 
-      if (distanceX <= 1 && distanceY <= 1)
+      if (distanceX <= 2 && distanceY <= 2)
       {
         (*vida)--;
         check_vida(vida, rows, cols);
@@ -122,5 +95,6 @@ void monster(int rows, int cols, int **map, int *vida, posicao_player *player, b
     }
 
     map[a[i].ay][a[i].ax] = 'M';
+ 
   }
 }

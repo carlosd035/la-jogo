@@ -30,7 +30,7 @@ void movimentacao(int c, int **map, posicao_player* player)
       player->x++;
     break;
   default:
-    // handle invalid input
+  
     break;
   }
 }

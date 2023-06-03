@@ -21,6 +21,8 @@ typedef struct posicao_m
   int ay;
   int ax;
 
+
+
 } posicao_monstro ;
 
 typedef struct posicao_a

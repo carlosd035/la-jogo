@@ -7,14 +7,7 @@
 #include <curses.h>
 #include "structs.h"
 #include "corredores.h"
-/*
-void free_map(int rows, int **map) {
-    for (int i = 0; i < rows; i++) {
-        free(map[i]);
-    }
-    free(map);
-}
-*/
+
 void check_l (int rows, int cols, int **map, int c,int *level,bool*p_place,int *r_place,posicao_player* player,posicao_t *t,bool*t_place,bool *a_place,bool *f_place,bool *v_place,bool*w_place){
   if (player->y == t->ty && player->x == t->tx && c == 'l')
   { 

@@ -29,7 +29,7 @@ void check_armadilha(int *vida, posicao_player *player, int rows, int cols,int *
   if (map[player->y][player->x] == '*')
   {
     
-    *vida = *vida - 5;
+    *vida = *vida - 2;
     check_vida2(vida, rows, cols);
   }
 }
@@ -38,7 +38,7 @@ void trap(int rows, int cols, int **map, bool *f_place, posicao_armadilha *f, in
 {
   if (!*f_place)
   {
-    for (int i = 0; i < 24; i++)
+    for (int i = 0; i < 25; i++)
     {
       do
       {
