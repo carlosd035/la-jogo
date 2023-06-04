@@ -38,7 +38,7 @@ void trap(int rows, int cols, int **map, bool *f_place, posicao_armadilha *f, in
 {
   if (!*f_place)
   {
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 30; i++)
     {
       do
       {

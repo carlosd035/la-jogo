@@ -62,7 +62,7 @@ void monster(int rows, int cols, int **map, int *vida, posicao_player *player, b
       else if (player->y > a[i].ay)
         direction = 1; // Baixo
 
-      if (distanceX <= 1 && distanceY <= 1)
+      if (distanceX <= 2 && distanceY <= 2)
       {
         (*vida)--;
         check_vida(vida, rows, cols);

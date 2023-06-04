@@ -22,7 +22,7 @@ void weapon(int rows, int cols, int **map, posicao_player *player,bool *w_place,
 {
   if (*w_place == 0)
   {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 6; i++)
     {
       do
       {
