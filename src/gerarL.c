@@ -29,7 +29,7 @@ void gerar_l(int rows, int cols, int **map, int c, int *level, bool *p_place, in
     if (*t_place == 0) {
         do {
             // Gerar posição aleatória para 'l'
-            t->ty = rand() % (rows - 1);  // Ajustado para gerar entre 0 e rows - 2
+            t->ty = rand() % (rows - 1);  
             t->tx = rand() % cols;
         } while (map[t->ty][t->tx] != ' ');
 

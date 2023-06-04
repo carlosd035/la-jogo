@@ -31,7 +31,7 @@ void fill_borders(int rows, int cols, int **map)
 bool check_colisao(int **map, int y, int x)
 {
   return (map[y][x] == '/' || map[y][x] == ' ' ||
-          map[y + 2][x] == ' ' || map[y - 2][x] == ' ' ||
+          map[y + 2][x] == ' ' || map[y - 2][x] == ' ' ||  
           map[y][x + 2] == ' ' || map[y][x - 2] == ' ');
 }
 
@@ -48,7 +48,7 @@ void generate_room(int rows, int cols, int **map, int *r_place)
 
   while (*r_place < room_num)
   {
-    int contador = 0; // number of tries for prototyping
+    int contador = 0; // numero de tentativas
 
     do
     {
@@ -74,32 +74,25 @@ void generate_room(int rows, int cols, int **map, int *r_place)
           if (check_colisao(map, y, x))
           {
             colisao = true;
-            y = coordinates_y + room_size_y + 1; // exit upper loop
-            break;                               // exit from current loop
+            y = coordinates_y + room_size_y + 1; // sai do ciclo  externo 
+            break;                               
           }
         }
       }
-    } while (colisao);
+    } while (colisao == true);
 
     for (int y = coordinates_y; y <= coordinates_y + room_size_y; y++)
     {
       for (int x = coordinates_x; x <= coordinates_x + room_size_x; x++)
       {
-        if (map[y][x] == '/')
-        {
-          y = coordinates_y + room_size_y + 1; // exit upper loop
-          break;                               // exit from current loop
-        }
-        else
-        {
-          map[y][x] = ' ';
-        }
+      map[y][x] = ' ';
+      
       }
     }
 
     *r_place = *r_place + 1;
-
-    if (*r_place > 1)
+/////// corredores
+    if (*r_place > 0)
     {
       centro_a_y = centro_y;
       centro_a_x = centro_x;
@@ -111,7 +104,7 @@ void generate_room(int rows, int cols, int **map, int *r_place)
     if (*r_place > 1)
     {
       int path_y;
-
+ 
       for (path_y = centro_a_y; path_y != centro_y;)
       {
         if (map[path_y][centro_a_x] != '/')

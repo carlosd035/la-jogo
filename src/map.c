@@ -45,6 +45,12 @@ int dungeon_draw(int rows, int cols, int **map, int *vida, int *level, bool *w_o
       //  mvaddch(yy, xx, 'L');
       //  attroff(COLOR_PAIR(1));
       //}
+      // else if (map[yy][xx] == 'M')
+      //{
+      //  attron(COLOR_PAIR(1));
+      //  mvaddch(yy, xx, 'M');
+      //  attroff(COLOR_PAIR(1));
+      //}
       else
       {
 

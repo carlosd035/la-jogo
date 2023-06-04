@@ -25,7 +25,7 @@ int game_loop(int rows, int c, int cols, int **map, int *r_place, int *vida, pos
 
   dungeon_gen(rows, cols, map, r_place);
   gerar_l(rows, cols, map, c, level, p_place, r_place, player, t, t_place, a_place,f_place,v_place,w_place);
- monster(rows, cols, map, vida, player, a_place, a);
+  monster(rows, cols, map, vida, player, a_place, a);
   trap(rows, cols, map, f_place, f,vida,player);
   g_vida (rows,cols,map, c,player, v_place ,vida,v);
   weapon(rows, cols, map,player,w_place,w,c,w_on);
@@ -66,7 +66,7 @@ int main()
   posicao_monstro *a = malloc(sizeof(posicao_monstro));
   (*a).ax = -1;
   (*a).ay = -1;
-  //(*a).vidam = 100;
+
 
   posicao_armadilha *f = malloc(sizeof(posicao_armadilha));
   (*f).fx = -1;

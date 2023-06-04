@@ -13,14 +13,14 @@ void check_vida2(int *vida, int rows, int cols)
 {
   if (*vida <= 0)
   {
-    clear();                                          // Limpa a tela
-    attron(A_BOLD);                                   // Ativa o atributo de texto A_BOLD
-    mvprintw(rows / 2, (cols - 18) / 2, "GAME OVER"); // Exibe a mensagem centralizada
-    attroff(A_BOLD);                                  // Desativa o atributo de texto A_BOLD
-    refresh();                                        // Atualiza a tela
-    getch();                                          // Aguarda a entrada do usuário
-    endwin();                                         // Restaura as configurações do terminal
-    exit(0);                                          // Encerra o programa
+    clear();                                          
+    attron(A_BOLD);                                 
+    mvprintw(rows / 2, (cols - 18) / 2, "GAME OVER"); 
+    attroff(A_BOLD);                                  
+    refresh();                                     
+    getch();                                          
+    endwin();                                         
+    exit(0);                                          
   }
 }
 

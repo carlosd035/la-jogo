@@ -12,7 +12,7 @@ typedef struct posicao_tt
 {
 
   int ty;
-  int tx; // coordenadas do t
+  int tx; // coordenadas do l
 } posicao_t;
 
 
@@ -20,8 +20,6 @@ typedef struct posicao_m
 {
   int ay;
   int ax;
-
-
 
 } posicao_monstro ;
 

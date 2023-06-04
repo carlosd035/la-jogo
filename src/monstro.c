@@ -10,24 +10,22 @@ void check_vida(int *vida, int rows, int cols)
 {
   if (*vida <= 0)
   {
-    clear();                                          // Limpa a tela
-    attron(A_BOLD);                                   // Ativa o atributo de texto A_BOLD
-    mvprintw(rows / 2, (cols - 18) / 2, "GAME OVER"); // Exibe a mensagem centralizada
-    attroff(A_BOLD);                                  // Desativa o atributo de texto A_BOLD
-    refresh();                                        // Atualiza a tela
-    getch();                                          // Aguarda a entrada do usuário
-    endwin();                                         // Restaura as configurações do terminal
-    exit(0);                                          // Encerra o programa
+    clear();
+    attron(A_BOLD);
+    mvprintw(rows / 2, (cols - 18) / 2, "GAME OVER");
+    attroff(A_BOLD);
+    refresh();
+    getch();
+    endwin();
+    exit(0);
   }
 }
-
-
 
 void monster(int rows, int cols, int **map, int *vida, posicao_player *player, bool *a_place, posicao_monstro *a)
 {
 
   // Verificar se os monstros já foram colocados no mapa
-  if (*a_place== 0 )
+  if (*a_place == 0)
   {
     for (int i = 0; i < 10; i++)
     {
@@ -35,7 +33,7 @@ void monster(int rows, int cols, int **map, int *vida, posicao_player *player, b
       {
         // Gerar posições iniciais aleatórias
         a[i].ay = rand() % (rows - 2); // para não gerar na última linha
-        a[i].ax = rand() % cols-2;
+        a[i].ax = rand() % cols - 2;
       } while (map[a[i].ay][a[i].ax] != ' ');
 
       map[a[i].ay][a[i].ax] = 'M';
@@ -64,7 +62,7 @@ void monster(int rows, int cols, int **map, int *vida, posicao_player *player, b
       else if (player->y > a[i].ay)
         direction = 1; // Baixo
 
-      if (distanceX <= 2 && distanceY <= 2)
+      if (distanceX <= 1 && distanceY <= 1)
       {
         (*vida)--;
         check_vida(vida, rows, cols);
@@ -95,6 +93,5 @@ void monster(int rows, int cols, int **map, int *vida, posicao_player *player, b
     }
 
     map[a[i].ay][a[i].ax] = 'M';
- 
   }
 }
